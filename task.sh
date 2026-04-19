@@ -5,7 +5,6 @@ if mysqldump -u "$DB_USER" -p"$DB_PASSWORD" --databases ShopDB --result-file=Sho
 else
   echo "$(date): ERROR Production reserve copying is failed!" >&2
 fi
-mysql -u "$DB_USER" -p"$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS ShopDBReserve;"
 mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBReserve < ShopDBReserve.sql
 
 if mysqldump -u "$DB_USER" -p"$DB_PASSWORD" --databases ShopDB --no-create-info --result-file=ShopDBDevelopment.sql; then
@@ -13,5 +12,4 @@ if mysqldump -u "$DB_USER" -p"$DB_PASSWORD" --databases ShopDB --no-create-info 
 else
   echo "$(date): ERROR Failed to transfer data to ShopDBDevelopment.sql" >&2
 fi
-mysql -u "$DB_USER" -p"$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS ShopDBDevelopment;"
 mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBDevelopment < "ShopDBDevelopment.sql"
